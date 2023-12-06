@@ -1,9 +1,11 @@
 import socket
 import os
+import time
 from tqdm import tqdm
 
 def receive_file(connection, file_size):
     received_size = 0
+    start_time = time.time()  # Start time
 
     with tqdm(total=file_size, unit='B', unit_scale=True, desc="Receiving") as progress_bar:
         with open("ReceivedFile.txt", "wb") as file:
@@ -15,6 +17,10 @@ def receive_file(connection, file_size):
                 received_size += len(data)
                 progress_bar.update(len(data))
 
+    end_time = time.time()  # End time
+    duration = end_time - start_time  # Calculate duration
+    print(f"Time taken: {duration:.2f} seconds")
+    
 def start_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
