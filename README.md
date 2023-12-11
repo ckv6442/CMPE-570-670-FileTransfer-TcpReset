@@ -35,4 +35,4 @@
 8. This still works because the attack is designed to listen for ACKs, but obviously in a real scenario, that wouldn't be the case.
 
 ### Demo:
-![] (https://github.com/ckv6442/CMPE-570-670-FileTransfer-TcpReset/blob/main/demo_file_transfer_tcp_reset.gif)
+![] (https://github.com/ckv6442/CMPE-570-670-FileTransfer-TcpReset/blob/47f6380524cadb13c0ef046ab53898caa087efd0/demo_file_transfer_tcp_reset.gif)
