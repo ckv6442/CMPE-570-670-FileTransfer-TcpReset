@@ -4,8 +4,7 @@ int main() {
     int fileSizeMB = 1024;
     int fileSizeB = fileSizeMB * 1024 * 1024;
     // Open the file for writing
-    FILE *file = fopen("BigFile.txt", "wb");
-
+    FILE *file = fopen("FileSizes/BigFile.txt", "wb");
 
     // Seek to the desired position in the file
     if (fseek(file, fileSizeB - 1, SEEK_SET) != 0) {
