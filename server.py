@@ -43,6 +43,8 @@ def start_server():
 
         print("File received successfully")
         client_socket.close()
+        time.sleep(1)
+        exit(0)
 
 def plot_transfer_progress(transfer_data):
     timestamps, data_received = zip(*transfer_data)
