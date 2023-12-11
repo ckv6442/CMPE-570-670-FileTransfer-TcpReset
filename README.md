@@ -34,5 +34,5 @@
 7. For smaller file sizes, they send the file too quickly. If this is the case, then you have to pre-empt the attack by running it before running the client.
 8. This still works because the attack is designed to listen for ACKs, but obviously in a real scenario, that wouldn't be the case.
 
-Demo: 
+### Demo:
 ![] (https://github.com/ckv6442/CMPE-570-670-FileTransfer-TcpReset/blob/main/demo_file_transfer_tcp_reset.gif)
