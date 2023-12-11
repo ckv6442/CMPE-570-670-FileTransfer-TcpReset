@@ -3,6 +3,9 @@ import scapy.all as scapy
 from scapy.layers.inet import TCP, IP
 from scapy.sendrecv import send
 
+import warnings
+warnings.filterwarnings('ignore')
+
 DEFAULT_WINDOW_SIZE = 2052
 
 # If one shot is active, only send the attack once, even if it fails.
