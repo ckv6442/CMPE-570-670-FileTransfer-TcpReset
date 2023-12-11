@@ -1,4 +1,4 @@
-# CMPE-570-TCP-RESET
+# TCP Reset
 ## To run on Windows:
 1. Install nmap for Windows. We will use the networking tools, mainly ncat, which are contained within nmap.
 2. Install Wireshark. This will not work without Wireshark since Windows does not have a native loopback adapter like Unix systems.
@@ -14,7 +14,7 @@
 12. You should see some of the information of the packet in the command prompt window of the Python script, and you should be able to match it up with what Wireshark is capturing.
 
 
-# CMPE-570-FILE-TRANSFER
+# File Transfer
 1. Download the FileSizes folder from Google Drive: https://drive.google.com/drive/folders/1EfWqXiebljur1QqctUcUz20LPKGXy4fi?usp=sharing.
 2. Move this folder into the project folder. (We could not updload all these files to GitHub).
 3. Open two command prompt windows.
@@ -24,7 +24,7 @@
 7. You can view and change the file size to be sent by going into client.py and changing the value of "file_size".
 
 
-# FILE TRANSFER + TCP RESET
+# File Transfer + TCP Reset
 1. Make sure both the TCP reset and file transfer work using the steps above.
 2. Open three command prompt windows.
 3. In the first window, run the server script using "python .\\server.py".
