@@ -4,7 +4,7 @@
 2. Install Wireshark. This will not work without Wireshark since Windows does not have a native loopback adapter like Unix systems.
 3. Open three command prompt windows. 
 4. Ensure that all Python packages are installed. Use "python -m pip install {package}" to install it.
-5. In the first window, enter "ncat -nvl 12345" to start a TCP connection on localhost port 8000.
+5. In the first window, enter "ncat -nvl 12345" to start a TCP connection on localhost port 12345.
 6. In the second window, enter "ncat 127.0.0.1 12345" to connect to the host.
 7. In Wireshark, enter the display filter "tcp.srcport==12345". This will look for tcp connections with the source port of 12345.
 8. Wireshark should have captured some kind of handshake packet already, but if it didn't use one of the command prompt windows to send a test packet.
@@ -33,3 +33,7 @@
 6. For larger file sizes such as the 9 GB file, you can wait for the progress bar to fill up to whatever percentage you want, and then run the attack.
 7. For smaller file sizes, they send the file too quickly. If this is the case, then you have to pre-empt the attack by running it before running the client.
 8. This still works because the attack is designed to listen for ACKs, but obviously in a real scenario, that wouldn't be the case.
+
+Demo: 
+![]
+(https://github.com/ckv6442/CMPE-570-670-FileTransfer-TcpReset/blob/main/demo_file_transfer_tcp_reset.gif)
