@@ -4,9 +4,9 @@
 2. Install Wireshark. This will not work without Wireshark since Windows does not have a native loopback adapter like Unix systems.
 3. Open three command prompt windows. 
 4. Ensure that all Python packages are installed. Use "python -m pip install {package}" to install it.
-5. In the first window, enter "ncat -nvl 8000" to start a TCP connection on localhost port 8000.
-6. In the second window, enter "ncat 127.0.0.1 8000" to connect to the host.
-7. In Wireshark, enter the display filter "tcp.srcport==8000". This will look for tcp connections with the source port of 8000.
+5. In the first window, enter "ncat -nvl 12345" to start a TCP connection on localhost port 8000.
+6. In the second window, enter "ncat 127.0.0.1 12345" to connect to the host.
+7. In Wireshark, enter the display filter "tcp.srcport==12345". This will look for tcp connections with the source port of 12345.
 8. Wireshark should have captured some kind of handshake packet already, but if it didn't use one of the command prompt windows to send a test packet.
 9. In one of the captured packets, look for "Frame #" and expand it. Then look for "Interface id" and expand it. Copy the value for "Interface name". It should be something like "\Device\NPF_Loopback".
 10. Use this name for the value of iface in the Python script. (Hint: In Python, a backslash is \\\\).
