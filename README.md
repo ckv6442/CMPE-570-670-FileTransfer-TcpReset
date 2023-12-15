@@ -10,7 +10,7 @@
 8. Wireshark should have captured some kind of handshake packet already, but if it didn't use one of the command prompt windows to send a test packet.
 9. In one of the captured packets, look for "Frame #" and expand it. Then look for "Interface id" and expand it. Copy the value for "Interface name". It should be something like "\Device\NPF_Loopback".
 10. Use this name for the value of iface in the Python script. (Hint: In Python, a backslash is \\\\).
-11. In the third window, run the attack using "python .\\tcp_reset.py", and go back to one of the command prompt windows and try to send something.
+11. In the third window, run the attack using "python .\\tcp_reset.py", and go back to client command prompt window and try to send something.
 12. You should see some of the information of the packet in the command prompt window of the Python script, and you should be able to match it up with what Wireshark is capturing.
 
 
